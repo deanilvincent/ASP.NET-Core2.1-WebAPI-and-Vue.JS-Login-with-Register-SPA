@@ -1,19 +1,26 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+      <div class="container">
+        <app-nav></app-nav>
+          <router-view/>
+       </div>
   </div>
 </template>
 
 <script>
+import Nav from "./components/Nav";
+
 export default {
-  name: 'App'
-}
+  components: {
+    appNav: Nav
+  },
+  name: "App"
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -21,3 +28,8 @@ export default {
   margin-top: 60px;
 }
 </style>
+
+<style>
+@import "../node_modules/bulma/css/bulma.min.css";
+</style>
+

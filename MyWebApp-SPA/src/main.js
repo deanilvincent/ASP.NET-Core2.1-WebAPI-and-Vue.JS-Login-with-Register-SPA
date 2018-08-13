@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
+// global host
+Vue.prototype.$hostname = "https://localhost:5001/api/"
 
 Vue.config.productionTip = false
 
