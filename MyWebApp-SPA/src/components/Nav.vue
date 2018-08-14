@@ -2,7 +2,7 @@
 <span>
 <nav class="navbar is-transparent">
   <div class="navbar-brand">
-    <router-link to="/" class="navbar-item">LOGO</router-link>
+    <router-link to="/" class="navbar-item">LOGO {{isLoggedIn}}</router-link>
     <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
       <span></span>
       <span></span>
@@ -32,22 +32,25 @@
 </template>
 
 <script>
-import AuthService from '../services/auth';
+import AuthService from "../services/auth";
 
 const authService = new AuthService();
 
 export default {
+  data() {
+    return {
+      isLoggedIn: this.$isLoggedIn
+    };
+  },
   methods: {
     logout() {
       localStorage.removeItem("token");
+      alert("Successfully logout");
       this.$router.push({ name: "Home" });
     },
-    loggedIn(){
-        return authService.loggedIn();
+    loggedIn() {
+      return authService.loggedIn();
     }
-  },
-  mounted(){
-      this.loggedIn();
   }
 };
 </script>
