@@ -1,4 +1,4 @@
-<template>
+    <template>
 <span>
 <nav class="navbar is-transparent">
   <div class="navbar-brand">
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div id="navbarExampleTransparentExample" class="navbar-menu"  v-if="loggedIn()">
+  <div id="navbarExampleTransparentExample" class="navbar-menu">
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
@@ -33,23 +33,29 @@
 
 <script>
 import AuthService from "../services/auth";
+import { mapState, mapActions } from "vuex";
 
 const authService = new AuthService();
 
 export default {
   data() {
     return {
-      isLoggedIn: this.$isLoggedIn
+      checkIfLoggedIn: false
     };
   },
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.isLoggedIn
+    })
+  },
   methods: {
+    ...mapActions([
+      "isLocalStoreTokenIsNotEmpty"
+    ]),
     logout() {
       localStorage.removeItem("token");
       alert("Successfully logout");
       this.$router.push({ name: "Home" });
-    },
-    loggedIn() {
-      return authService.loggedIn();
     }
   }
 };
