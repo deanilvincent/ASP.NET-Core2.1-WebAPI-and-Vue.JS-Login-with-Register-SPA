@@ -13,13 +13,22 @@ const store = new Vuex.Store({
 
     },
     mutations: {
-        [IS_LOCALSTORAGE_TOKEN_IS_NOT_EMPTY]: (state) => {
-            state.isLoggedIn = !!localStorage.getItem('token');
+        [IS_LOCALSTORAGE_TOKEN_IS_NOT_EMPTY]: (state, payload) => {
+            if (payload.isLoggedIn) {
+                if (localStorage.getItem('token')) {
+                    state.isLoggedIn = true;
+                } else {
+                    state.isLoggedIn = false;
+                }
+            } else {
+                localStorage.removeItem('token');
+                state.isLoggedIn = false;
+            }
         }
     },
     actions: {
-        isLocalStoreTokenIsNotEmpty: ({ commit }) => {
-            commit(IS_LOCALSTORAGE_TOKEN_IS_NOT_EMPTY);
+        isLocalStoreTokenIsNotEmpty: ({ commit }, payload) => {
+            commit(IS_LOCALSTORAGE_TOKEN_IS_NOT_EMPTY, payload);
         }
     }
 });
