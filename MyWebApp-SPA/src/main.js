@@ -9,7 +9,7 @@ import store from './mainStore/store'
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
 // global host
-Vue.prototype.$isLoggedIn = () => !!localStorage.getItem('token')
+Vue.prototype.$isLoggedIn = !!localStorage.getItem('token');
 
 Vue.config.productionTip = false
 

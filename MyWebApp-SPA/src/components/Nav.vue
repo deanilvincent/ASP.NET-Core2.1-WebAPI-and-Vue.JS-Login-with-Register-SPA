@@ -2,7 +2,7 @@
 <span>
 <nav class="navbar is-transparent">
   <div class="navbar-brand">
-    <router-link to="/" class="navbar-item">LOGO {{isLoggedIn}}</router-link>
+    <router-link to="/" class="navbar-item">LOGO</router-link>
     <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
       <span></span>
       <span></span>
@@ -10,12 +10,12 @@
     </div>
   </div>
 
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
+  <div id="navbarExampleTransparentExample" class="navbar-menu" v-if="isLoggedIn">
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <router-link to="/user-account" class="button">ACCOUNT</router-link>
+            <button @click="navToAccount" class="button">ACCOUNT</button>
           </p>
             <p class="control">
             <a class="button is-danger" @click="logout">
@@ -40,7 +40,9 @@ const authService = new AuthService();
 export default {
   data() {
     return {
-      checkIfLoggedIn: false
+      get token() {
+        return localStorage.getItem("token");
+      }
     };
   },
   computed: {
@@ -49,13 +51,20 @@ export default {
     })
   },
   methods: {
-    ...mapActions([
-      "isLocalStoreTokenIsNotEmpty"
-    ]),
+    ...mapActions(["isLocalStoreTokenIsNotEmpty"]),
     logout() {
       localStorage.removeItem("token");
       alert("Successfully logout");
+      this.isLocalStoreTokenIsNotEmpty({
+        isLoggedIn: false
+      });
       this.$router.push({ name: "Home" });
+    },
+    navToAccount() {
+      this.isLocalStoreTokenIsNotEmpty({
+        isLoggedIn: true
+      });
+      this.$router.push({ name: "UserAccount" });
     }
   }
 };

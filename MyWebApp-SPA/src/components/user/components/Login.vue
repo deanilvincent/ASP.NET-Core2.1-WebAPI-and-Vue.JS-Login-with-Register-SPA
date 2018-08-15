@@ -21,6 +21,7 @@
 
 <script>
 import AuthService from "../../../services/auth.js";
+import { mapActions } from "vuex";
 
 const authService = new AuthService();
 
@@ -31,8 +32,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["isLocalStoreTokenIsNotEmpty"]),
     login() {
       authService.login(this.user).then(() => {
+        this.isLocalStoreTokenIsNotEmpty({ isLoggedIn: true });
         alert("Successfully login");
       });
     },

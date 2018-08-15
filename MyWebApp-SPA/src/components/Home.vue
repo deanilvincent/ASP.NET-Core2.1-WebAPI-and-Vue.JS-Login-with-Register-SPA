@@ -1,17 +1,27 @@
 <template>
   <div class="hello">
     <h1 class="title">{{ msg }}</h1>
-    <router-link to="/login">Login</router-link> | 
-    <router-link to="/register">Register</router-link>
+    <div v-if="!isLoggedIn">
+      <router-link to="/login">Login</router-link> | 
+      <router-link to="/register">Register</router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.isLoggedIn
+    })
+  },
   name: "HelloWorld",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App with Login and Register SPA connected to ASP.NET Core Web API 2.1"
+      msg:
+        "Welcome to Your Vue.js App with Login and Register SPA connected to ASP.NET Core Web API 2.1"
     };
   }
 };
